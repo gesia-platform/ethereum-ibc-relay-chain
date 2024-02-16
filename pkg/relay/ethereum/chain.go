@@ -346,9 +346,9 @@ func (c *Chain) QueryUnfinalizedRelayPackets(ctx core.QueryContext, counterparty
 	packets = packets.Filter(seqs)
 	if len(packets) == 0 {
 		if latestHeight, err := c.client.BlockNumber(ctx.Context()); err != nil {
-			checkpoint = latestHeight
-		} else {
 			panic(err)
+		} else {
+			checkpoint = latestHeight
 		}
 		logger.Info("!!! QueryUnfinalizedRelayPackets packets zero")
 	} else {
@@ -411,9 +411,9 @@ func (c *Chain) QueryUnfinalizedRelayAcknowledgements(ctx core.QueryContext, cou
 	packets = packets.Filter(seqs)
 	if len(packets) == 0 {
 		if latestHeight, err := c.client.BlockNumber(ctx.Context()); err != nil {
-			checkpoint = latestHeight
-		} else {
 			panic(err)
+		} else {
+			checkpoint = latestHeight
 		}
 		logger.Info("!!! QueryUnfinalizedRelayAcknowledgements packets zero")
 	} else {
