@@ -72,7 +72,7 @@ func (chain *Chain) findSentPackets(ctx core.QueryContext, fromHeight uint64) (c
 		}},
 	}
 
-	logger.Info("findSentPackets", string(rune(fromHeight)), string(rune(ctx.Height().GetRevisionHeight())))
+	logger.Info("findSentPackets: " + fmt.Sprintf("%d - %d", fromHeight, ctx.Height().GetRevisionHeight()))
 
 	logs, err := chain.client.FilterLogs(ctx.Context(), query)
 	if err != nil {
@@ -159,7 +159,8 @@ func (chain *Chain) findReceivedPackets(ctx core.QueryContext, fromHeight uint64
 
 func (chain *Chain) findRecvPacketEvents(ctx core.QueryContext, fromHeight uint64) ([]*ibchandler.IbchandlerRecvPacket, error) {
 	logger := chain.GetChannelLogger()
-	logger.Info("findRecvPacketEvents", string(rune(fromHeight)), string(rune(ctx.Height().GetRevisionHeight())))
+
+	logger.Info("findRecvPacketEvents: " + fmt.Sprintf("%d - %d", fromHeight, ctx.Height().GetRevisionHeight()))
 
 	query := ethereum.FilterQuery{
 		FromBlock: big.NewInt(int64(fromHeight)),
@@ -190,6 +191,10 @@ func (chain *Chain) findRecvPacketEvents(ctx core.QueryContext, fromHeight uint6
 }
 
 func (chain *Chain) findWriteAckEvents(ctx core.QueryContext, fromHeight uint64) ([]*ibchandler.IbchandlerWriteAcknowledgement, error) {
+	logger := chain.GetChannelLogger()
+
+	logger.Info("findRecvPacketEvents: " + fmt.Sprintf("%d - %d", fromHeight, ctx.Height().GetRevisionHeight()))
+
 	query := ethereum.FilterQuery{
 		FromBlock: big.NewInt(int64(fromHeight)),
 		ToBlock:   big.NewInt(int64(ctx.Height().GetRevisionHeight())),
