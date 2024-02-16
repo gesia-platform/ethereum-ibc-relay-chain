@@ -319,6 +319,7 @@ func (c *Chain) QueryUnreceivedPackets(ctx core.QueryContext, seqs []uint64) ([]
 func (c *Chain) QueryUnfinalizedRelayPackets(ctx core.QueryContext, counterparty core.LightClientICS04Querier) (core.PacketInfoList, error) {
 	logger := c.GetChannelLogger()
 	checkpoint, err := c.loadCheckpoint(sendCheckpoint)
+	checkpoint = 1
 	if err != nil {
 		logger.Error("failed to load checkpoint", err)
 		return nil, err
@@ -384,6 +385,7 @@ func (c *Chain) QueryUnreceivedAcknowledgements(ctx core.QueryContext, seqs []ui
 func (c *Chain) QueryUnfinalizedRelayAcknowledgements(ctx core.QueryContext, counterparty core.LightClientICS04Querier) (core.PacketInfoList, error) {
 	logger := c.GetChannelLogger()
 	checkpoint, err := c.loadCheckpoint(recvCheckpoint)
+	checkpoint = 1
 	if err != nil {
 		logger.Error("failed to load checkpoint", err)
 		return nil, err
