@@ -345,9 +345,15 @@ func (c *Chain) QueryUnfinalizedRelayPackets(ctx core.QueryContext, counterparty
 
 	packets = packets.Filter(seqs)
 	if len(packets) == 0 {
-		checkpoint = ctx.Height().GetRevisionHeight() + 1
+		if latestHeight, err := c.client.BlockNumber(ctx.Context()); err != nil {
+			checkpoint = latestHeight
+		} else {
+			panic(err)
+		}
+		logger.Info("!!! QueryUnfinalizedRelayPackets packets zero")
 	} else {
 		checkpoint = packets[0].EventHeight.GetRevisionHeight()
+		logger.Info("!!! QueryUnfinalizedRelayPackets packets positive")
 	}
 	if err := c.saveCheckpoint(checkpoint, sendCheckpoint); err != nil {
 		logger.Error("failed to save checkpoint", err)
@@ -404,9 +410,15 @@ func (c *Chain) QueryUnfinalizedRelayAcknowledgements(ctx core.QueryContext, cou
 
 	packets = packets.Filter(seqs)
 	if len(packets) == 0 {
-		checkpoint = ctx.Height().GetRevisionHeight() + 1
+		if latestHeight, err := c.client.BlockNumber(ctx.Context()); err != nil {
+			checkpoint = latestHeight
+		} else {
+			panic(err)
+		}
+		logger.Info("!!! QueryUnfinalizedRelayAcknowledgements packets zero")
 	} else {
 		checkpoint = packets[0].EventHeight.GetRevisionHeight()
+		logger.Info("!!! QueryUnfinalizedRelayAcknowledgements packets positive")
 	}
 	if err := c.saveCheckpoint(checkpoint, recvCheckpoint); err != nil {
 		logger.Error("failed to save checkpoint", err)

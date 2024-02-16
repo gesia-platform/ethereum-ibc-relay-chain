@@ -42,6 +42,7 @@ func init() {
 }
 
 func (chain *Chain) findSentPackets(ctx core.QueryContext, fromHeight uint64) (core.PacketInfoList, error) {
+
 	logger := chain.GetChannelLogger()
 	now := time.Now()
 	var dstPortID, dstChannelID string
@@ -194,7 +195,6 @@ func (chain *Chain) findWriteAckEvents(ctx core.QueryContext, fromHeight uint64)
 	logger := chain.GetChannelLogger()
 
 	logger.Info("findRecvPacketEvents: " + fmt.Sprintf("%d - %d", fromHeight, ctx.Height().GetRevisionHeight()))
-
 	query := ethereum.FilterQuery{
 		FromBlock: big.NewInt(int64(fromHeight)),
 		ToBlock:   big.NewInt(int64(ctx.Height().GetRevisionHeight())),
