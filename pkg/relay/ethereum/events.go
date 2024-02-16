@@ -72,6 +72,8 @@ func (chain *Chain) findSentPackets(ctx core.QueryContext, fromHeight uint64) (c
 		}},
 	}
 
+	logger.Info("findSentPackets", string(rune(fromHeight)), string(rune(ctx.Height().GetRevisionHeight())))
+
 	logs, err := chain.client.FilterLogs(ctx.Context(), query)
 	if err != nil {
 		logger.Error("failed to filter logs", err)
@@ -156,6 +158,9 @@ func (chain *Chain) findReceivedPackets(ctx core.QueryContext, fromHeight uint64
 }
 
 func (chain *Chain) findRecvPacketEvents(ctx core.QueryContext, fromHeight uint64) ([]*ibchandler.IbchandlerRecvPacket, error) {
+	logger := chain.GetChannelLogger()
+	logger.Info("findRecvPacketEvents", string(rune(fromHeight)), string(rune(ctx.Height().GetRevisionHeight())))
+
 	query := ethereum.FilterQuery{
 		FromBlock: big.NewInt(int64(fromHeight)),
 		ToBlock:   big.NewInt(int64(ctx.Height().GetRevisionHeight())),
